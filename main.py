@@ -3,8 +3,9 @@
 # 3 TODOs
 
 import os
+import platform
+import sys
 import time
-import msvcrt
 import random
 
 MAPSIZE = 4
@@ -50,7 +51,11 @@ class Game:
             self.data[x][y] = 2
 
     def printMap(self):
-        os.system("cls")  # 清屏(win)
+        # Add system check
+        if platform.system() == "Windows":
+            os.system("cls")  # 清屏(win)
+        else:
+            os.system("clear")  # 清屏(*nix)
         print()
         for eachLine in self.data:
             for eachNum in eachLine:
@@ -58,9 +63,22 @@ class Game:
             print()
         print("\nScore: %d" % self.score)
 
-    # TODO: Finish this function defenition
     def exitGame(self):
-        pass
+        print("\nGame over!")
+        FILENAME = r"score.txt"
+        if not os.path.exists(FILENAME):
+            file = open(FILENAME, "w")
+            file.write(str(self.score))
+            file.close()
+        else:
+            file = open(FILENAME, "r")
+            bestScore = int(file.readline())
+            file.close()
+            bestScore = max(bestScore, self.score)
+            file = open(FILENAME, "w")
+            print("Best score: %d" % bestScore)
+            file.write(str(bestScore))
+            file.close()
 
     def play(self):
         self.generateRandomNum()
@@ -70,8 +88,8 @@ class Game:
             if not self.gameStatus:
                 break
             self.printMap()
-            ch = msvcrt.getch()  # TODO: Fix this bug (use msvcrt.kbhit())
-            self.move(ch)
+            direction = sys.stdin.read(1)  # Bug fixed (but \n is needed)
+            self.move(direction)
         self.exitGame()
 
 
