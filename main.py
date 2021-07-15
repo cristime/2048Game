@@ -1,6 +1,6 @@
 # Author: Cristime Cai
 # -*- coding: utf-8 -*-
-# 3 TODOs
+# 1 TODOs
 
 import os
 import platform
@@ -9,6 +9,7 @@ import time
 import random
 
 MAPSIZE = 4
+FILENAME = r"score.txt"
 
 
 class Game:
@@ -36,7 +37,14 @@ class Game:
 
     # TODO: Finish this function defenition
     def move(self, direction):
-        pass
+        if direction == "w" or direction == "W":
+            pass
+        elif direction == "s" or direction == "S":
+            pass
+        elif direction == "a" or direction == "A":
+            pass
+        elif direction == "d" or direction == "D":
+            pass
 
     def generateRandomNum(self):
         x = MAPSIZE
@@ -65,7 +73,6 @@ class Game:
 
     def exitGame(self):
         print("\nGame over!")
-        FILENAME = r"score.txt"
         if not os.path.exists(FILENAME):
             file = open(FILENAME, "w")
             file.write(str(self.score))
